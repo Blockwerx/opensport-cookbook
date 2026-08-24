@@ -94,3 +94,7 @@ than a prompt you retune.
 
 Issues and pull requests welcome. If a rule is wrong for your context, or a
 recipe hits something these files do not cover, that is worth telling us.
+
+Contributing? See [CONTRIBUTING.md](CONTRIBUTING.md) — everything here is
+customer-facing, which constrains what can go in a file more than it usually
+would.
