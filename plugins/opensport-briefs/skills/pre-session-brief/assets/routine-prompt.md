@@ -66,11 +66,13 @@ that look like successes:
 
 - **Denominator.** The headline should read `N of the M who trained`, not
   `N of <roster>`. If it reports the roster total, step 2 was skipped.
-- **Per-card baseline provenance.** Every card should carry its own window
-  (`Baseline 22 of 28 days`). A single global claim about baselines means
-  rule 2 was violated and the critic missed it.
-- **The boundary statement.** All three clauses, including "Absence of a card
-  is not clearance."
+- **Per-card baseline provenance.** Every card should carry its own basis —
+  `Baseline 28-day declared`, or `Baseline basis not declared for this rule`
+  where the alert declares none. Days-on-record is not a baseline window; a
+  card quoting one, or a single global claim about baselines, means rule 2
+  was violated and the critic missed it.
+- **The boundary statement.** All four clauses, including "No recommendation
+  is made or implied" and "Absence of a card is not clearance."
 - **Link targets.** If alert deep-links resolve to the alerts index rather than
   the specific alert, the brief must say so. Silent fallback is the defect —
   not the fallback itself.

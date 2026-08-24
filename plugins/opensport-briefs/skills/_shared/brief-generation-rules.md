@@ -5,7 +5,7 @@ generates from OpenSport MCP tool output. Each is phrased so a reviewer — huma
 or the `brief-critic` subagent — can say "this draft violates rule 4" and point
 at a line.
 
-Rules 1, 3, 9, 10 and 11 are **blocking**: a draft that violates one is not
+Rules 1, 3, 4, 9, 10 and 11 are **blocking**: a draft that violates one is not
 sent.
 
 ---
@@ -59,9 +59,9 @@ everything.** Not every rule participates in the baseline-building guard, so a
 thin baseline can arrive with no flag on it at all and be treated as trusted.
 
 Measured on a Premiership-sized roster of about 80 athletes,
-`High_Deceleration_Count` returned baselines of **0.67, 0.68, 0.78 and 1.01**
-— against a squad norm of roughly 2–3 — producing excursions of **+800%,
-+500%, +500% and +254%**. None of those
+`High_Deceleration_Count` returned baselines of **0.67, 0.68, 0.78, 0.89 and
+1.01** — against a squad norm of roughly 2–3 — producing excursions of
+**+800%, +500%, +500%, +424% and +254%**. None of those
 alerts carried `baselineStatus`. Nothing in the payload marked them as
 unusable, and they were the four largest excursions in the entire squad.
 
@@ -93,7 +93,7 @@ Never let a `building`-state alert sit in a list of quantified findings as
 though it were one. `info` severity means "no trustworthy comparison yet,
 whatever the raw severity" — it is not a mild risk.
 
-## 4. Value type is read, never inferred
+## 4. Value type is read, never inferred (BLOCKING)
 
 `valueType` distinguishes `percentageOfBaseline` from
 `percentageAboveBaseline`. These differ by exactly 100 and have been misread
@@ -105,6 +105,12 @@ reading it as *% above* overstates by 100).
 
 Never convert between the two phrasings. Never describe a `magnitude` value as
 a percentage; magnitudes are unsigned by contract.
+
+This blocks a send because the failure is silent: a figure phrased the wrong
+way is wrong by exactly 100, and nothing in the sentence looks odd. It is
+checkable without the payload — the brief prints `observed vs baseline`, so
+`observed ÷ baseline` gives "% of" and `(observed ÷ baseline) − 1` gives
+"% above". Recompute rather than trusting the phrasing.
 
 ## 5. Unverified units are stated without a unit
 

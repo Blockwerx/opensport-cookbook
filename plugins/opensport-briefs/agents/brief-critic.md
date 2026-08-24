@@ -51,7 +51,7 @@ multiplier or ratio. Cross-reference the athlete's alert: if it carries
 `baselineStatus`, or `baselineValue` is null, or `valueType` is `unknown`, the
 figure must not exist. This is the highest-value check you perform.
 
-**Rule 4 — value type.** For each percentage, confirm the phrasing matches
+**Rule 4 — value type (blocking).** For each percentage, confirm the phrasing matches
 `valueType`. `percentageOfBaseline` reads "% of"; `percentageAboveBaseline`
 reads "% above". A figure near 100 phrased the wrong way is off by exactly
 100 — check the arithmetic where you have both observed and baseline:
@@ -86,7 +86,13 @@ What passes: which signal moved (`braking, not volume`), a `Not real if →`
 naming a data condition, and a `Worth opening →` naming evidence to inspect.
 FAIL any `Not real if` or `Worth opening` that names an action instead.
 
-**Rule 11 — boundary.** The three clauses must be present verbatim, including
+**Rule 11 — boundary.** **Four** clauses must be present verbatim:
+(1) training-load pattern only, (2) no recommendation is made or implied,
+(3) not a medical / injury-risk / return-to-play judgement, and
+(4) absence of a card is not clearance. Count them. Clauses 2 and 4 are the
+ones a trim drops first, and clause 4 is the one the customer docs call the
+dangerous omission — a brief that names five athletes has, in writing,
+declined to name the rest. Including
 "No recommendation is made or implied" and "Absence of a card is not
 clearance". A workflow caveat about sign-off does not satisfy this — and its
 presence is itself a rule 9 FAIL. A missing clause is a FAIL even when the

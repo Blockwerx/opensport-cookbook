@@ -35,7 +35,8 @@ four unit systems, behind five repetitions of an AI disclaimer, is a draft
 nobody reads. Completeness lives behind links.
 
 Before drafting anything, load `../_shared/brief-generation-rules.md`. Those eleven
-rules are the acceptance criteria, and rules 1, 3, 9, 10 and 11 block a send.
+rules are the acceptance criteria, and rules 1, 3, 4, 9, 10 and 11 block a
+send.
 
 ## Inputs
 
@@ -125,7 +126,7 @@ including what a `Not real if →` and a `Worth opening →` may and may not say
 Hand the draft to the `brief-critic` subagent. It returns a per-rule verdict.
 
 - Fix every violation and re-submit **once**.
-- If a **blocking** rule (1, 3, 9, 10, 11) still fails, do not send. Report the
+- If a **blocking** rule (1, 3, 4, 9, 10, 11) still fails, do not send. Report the
   violation and stop.
 - Non-blocking violations that survive two passes are listed in the run log
   and the brief goes out — do not loop.
@@ -143,9 +144,8 @@ not classify.
   production. Report the pseudonym as given. Redaction state is not a defect to
   work around.
 - **Never fill a gap by inference.** A missing baseline, a null unit, an
-  unresolvable link: state the gap. The 01:53→02:10 lesson is that trimming a
-  brief must not silently delete a disclosure while keeping the behaviour it
-  disclosed — if alert deep-links are unavailable because the payload carries
+  unresolvable link: state the gap. Shortening a brief must never silently
+  delete a disclosure while keeping the behaviour it disclosed — if alert deep-links are unavailable because the payload carries
   no id, say the link is to the index.
 - **Never suggest, recommend or prescribe.** No load instruction, no status
   label, no "consider", no "pending sign-off". Rule 9 is blocking and a
