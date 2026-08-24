@@ -67,8 +67,10 @@ week the threshold separated almost nobody, so this is a fact about the week's
 programming rather than N athletes independently at risk.
 
 `artefact_note` — if any athlete was excluded from the ranking under rule 2's
-plausibility floor, say how many and why, and say plainly that excluded is not
-cleared.
+three screens, say how many, **which screen removed them** (implausible level,
+out of family, or unstable baseline), and say plainly that excluded is not
+cleared. Reporting the screen matters: an unstable baseline is a different
+statement about the data than a low one.
 
 `limitation_line` — the systemic caveat, two lines maximum, positioned *after*
 the list and framed as a boundary. Per-alert windows, not a global claim

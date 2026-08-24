@@ -58,6 +58,13 @@ reads "% above". A figure near 100 phrased the wrong way is off by exactly
 `observed ÷ baseline` gives "% of"; `(observed ÷ baseline) − 1` gives
 "% above".
 
+**Rule 2 — baseline screens.** For every published ratio, check the baseline
+against all three screens: below 1.0 on a deceleration metric, below half the
+squad median for its alert type, or an in-window spread over 1.5x for the same
+athlete and type. If athletes were excluded, the brief must say how many and
+which screen caught them. A brief whose largest excursions are all deceleration
+figures in the hundreds of percent has almost certainly skipped this.
+
 **Rule 6 — precision.** Grep for a decimal point on a count or a load. A
 fractional sprint baseline is an automatic FAIL.
 

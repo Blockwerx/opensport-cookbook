@@ -41,8 +41,8 @@ record's `alertId` is one of several.
 
 ## Two limits to state, not assume
 
-**`alertId` is not on every deployment.** It reaches the alert payload in
-OS-3406; a server without it returns alerts with no id. When it is absent, fall
+**`alertId` is not on every deployment.** It is being added to the alert
+payload; a server without it returns alerts with no id. When it is absent, fall
 back to `[all N →]` (the alerts index, which needs no id) and say in the brief
 that the link is to the list rather than the alert. Never build a link from an
 empty value.
@@ -54,7 +54,8 @@ per customer rather than per brief.
 
 ## Where this is going
 
-OS-3416 returns `alertUrl` as a field on the alert. Once that lands, the brief
+A forthcoming server change returns `alertUrl` as a field on the alert. Once
+that lands, the brief
 reads a URL rather than composing one from a route described in prose, and this
 file becomes a note about what the field means instead of a construction
 recipe. Prefer `alertUrl` over this pattern the moment it is available.

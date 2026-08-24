@@ -81,12 +81,10 @@ Then: recency gate → distinct alert families → severity, **excluding
 still-building** → magnitude of the dominant *above-baseline* excursion →
 session date.
 
-Two guards on that magnitude step — both cost a live sweep to find, both
-documented in `references/squad-sweep.md`: rank only *above-baseline*
-excursions (the field is signed, and an underload is not a loading risk), and
-screen out ratios off near-zero baselines before ranking (rule 2). On a live
-sweep of about 80 athletes, five of the top five raw excursions were
-deceleration artefacts.
+Two guards on that magnitude step, both in `references/squad-sweep.md`: rank
+only *above-baseline* excursions (the field is signed — an underload is not a
+loading risk), and apply rule 2's three baseline screens before ranking. On a
+live sweep, five of the top five raw excursions were deceleration artefacts.
 
 State how many were flagged and how many are shown. Five cards out of fifty
 flagged is a tenth of the sweep; say so and link the rest.
@@ -122,12 +120,11 @@ evidence, residuals, boundary. The template carries the per-field rules,
 including what a `Not real if →` and a `Worth opening →` may and may not say.
 
 Build every `[...]` marker from `references/link-targets.md`. The alert link is
-the athlete profile's Alerts tab, **not** `/ai-insights/ai-alerts/{alertId}` —
-that page windows on session date while this feed is ordered by the generation
-stamp, so exactly the alerts this brief surfaces are the ones it cannot expand.
-Where `alertId` is absent from the payload, fall back to the alerts index and
-say the link is to the list — an undisclosed downgrade is the disclosure-drop
-this skill's guardrails exist to prevent.
+the athlete profile's Alerts tab, **not** the ai-alerts page — that one windows
+on session date while this feed orders by generation stamp, so the alerts this
+brief surfaces are exactly the ones it cannot expand. Where `alertId` is
+absent, fall back to the index **and say the link is to the list**; an
+undisclosed downgrade is the disclosure-drop these guardrails exist to prevent.
 
 ### 7. Gate through the critic (mandatory)
 
@@ -148,35 +145,26 @@ not classify.
 ## Guardrails
 
 - **Never invent an athlete name.** Hashed pseudonyms (`Athlete 1A2B3C4D`) mean
-  egress PII redaction is on for that org — the expected state outside
-  production. Report the pseudonym as given. Redaction state is not a defect to
-  work around.
+  egress PII redaction is on for that org. Report the pseudonym as given;
+  redaction is not a defect to work around.
 - **Never fill a gap by inference.** A missing baseline, a null unit, an
-  unresolvable link: state the gap. Shortening a brief must never silently
-  delete a disclosure while keeping the behaviour it disclosed — if alert deep-links are unavailable because the payload carries
-  no id, say the link is to the index.
+  unresolvable link: state the gap. Shortening a brief must never delete a
+  disclosure while keeping the behaviour it disclosed.
 - **Never suggest, recommend or prescribe.** No load instruction, no status
   label, no "consider", no "pending sign-off". Rule 9 is blocking and a
   softened prescription still violates it. If a line could change what an
   athlete does today, cut it.
-- **Never imply a clearance**, for a carded athlete or an uncarded one. Rule 11
-  is not negotiable and not abbreviatable.
+- **Never imply a clearance**, for a carded athlete or an uncarded one.
 - **Never let length be the fix.** If the brief is too long, move provenance
-  behind links. Do not delete reasoning, falsifiers or caveats to hit a word
-  count — those are the product.
-- **Leave a place for a human to record that they looked.** The document is
-  retained; the `Seen by` line is the only workflow element it carries.
+  behind links. Reasoning, falsifiers and caveats are the product.
+- **Leave a place for a human to record that they looked** — the `Seen by`
+  line is the only workflow element the brief carries.
 
 ## Output shape
 
-A sent email, plus a run log line. The email:
-
-- fits its what-moved list on one phone screen with no scrolling
-- names which signal moved per athlete, and one figure for it
-- states the correct denominator in the first three lines
-- carries every falsifier, one per card, one sentence each
-- ends with the verbatim boundary statement and the data cutoff
-- targets ~600 words; treat 900 as a defect to investigate, not a budget
-
-Related: `assets/routine-prompt.md` is the prompt the scheduled cloud routine
-runs, and it is deliberately thin — it names this skill and gets out of the way.
+A sent email plus a one-line run log. The email fits its what-moved list on one
+phone screen without scrolling; names which signal moved per athlete with one
+figure for it; states the correct denominator in the first three lines; carries
+every falsifier, one sentence each; and ends with the verbatim boundary
+statement and the data cutoff. Target ~600 words — treat 900 as a defect to
+investigate, not a budget.

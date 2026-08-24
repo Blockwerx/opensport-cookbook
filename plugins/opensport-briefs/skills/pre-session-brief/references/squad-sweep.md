@@ -115,7 +115,7 @@ with genuine overload cases.
 0.68, 0.78, 0.89 and 1.01 against a squad norm near 2–3, yielding +800%, +500%,
 +500%, +424% and +254%. **None carried `baselineStatus`.** Ranked raw, those
 five occupied the entire top five and displaced every real finding. Screen them
-with the plausibility floor in rule 2 and raise them as a data-quality
+with rule 2's three baseline screens and raise them as a data-quality
 question.
 
 For reference, the same sweep after screening: the top card was a +178%

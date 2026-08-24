@@ -65,15 +65,48 @@ Measured on a Premiership-sized roster of about 80 athletes,
 alerts carried `baselineStatus`. Nothing in the payload marked them as
 unusable, and they were the four largest excursions in the entire squad.
 
-So apply a plausibility floor before publishing or ranking any ratio:
+So screen every baseline before publishing or ranking a ratio against it.
+Three screens, because each catches what the others cannot. Apply all three.
 
-- Compare the baseline against the same metric's baseline for other athletes.
-  An order-of-magnitude outlier is an artefact, not a finding.
-- Treat a sub-unit deceleration baseline, or any baseline that would need the
-  athlete to have almost no history, as untrusted **whatever the payload says**.
-- A very large percentage off a small absolute difference is the signature.
-  `4.67 vs 0.78` is +500% and about 4 m/s² — the ratio is dramatic, the
-  quantity is not.
+**1. Physical plausibility — an absolute bound.** A deceleration baseline below
+**1.0 m/s²** is not a plausible training baseline for a senior athlete in a
+collision sport; it is a measurement artefact whatever the payload says.
+Exclude on level alone. This is a domain judgement, not a statistical one, so
+it holds even when a whole squad's history is thin.
+
+**2. Out of family — a relative floor.** Exclude a baseline below **half the
+squad median for the same alert type in the same run**. Compute the median from
+the run you are in; do not carry a number between deployments.
+
+This catches thin baselines that clear the physical bound but sit outside their
+own squad's distribution. On one 26-athlete distribution of deceleration
+baselines the median was 2.31, putting the floor at 1.16 — and any cutoff
+between 1.01 and 1.56 excluded exactly the same five athletes, so the answer is
+insensitive to where in that band the line falls. That insensitivity is the
+argument for the number; it is not a universal constant.
+
+**3. Instability — the one a level test cannot see.** If an athlete's in-window
+alerts of the same type disagree on baseline by more than **1.5×** (max ÷ min),
+treat the baseline as untrusted **regardless of level**.
+
+The failure here is not that a baseline is low, it is that it is moving. One
+athlete read 0.7, 1.0 and 1.6 for the same metric across four days — a 2.3×
+spread straddling any cutoff you would pick. Two of those readings are
+artefacts by screens 1 and 2 and the third ranked him top of the squad, so
+which brief you produce depends on which day the sweep happened to read. Rule
+10 establishes that these figures move under re-evaluation; this is the same
+phenomenon reaching the point where it decides the ranking rather than the
+wording.
+
+**The signature to recognise**, across all three: a very large percentage off a
+small absolute difference. `4.67 vs 0.78` is +500% and about 4 m/s² — the ratio
+is dramatic, the quantity is not.
+
+**These numbers are provisional.** They come from two sweeps of the same squad,
+which is not a sample. What would settle them is the distribution of baselines
+by alert type across several squads; until that exists, treat 1.0 / half-median
+/ 1.5× as defaults to be overridden with evidence, and state in the brief how
+many athletes each screen removed.
 
 Report these as a data-quality question, not as an athlete's risk. And prefer
 the absolute figure to the ratio whenever the baseline is doubtful.
