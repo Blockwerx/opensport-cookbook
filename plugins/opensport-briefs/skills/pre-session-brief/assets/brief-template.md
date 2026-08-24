@@ -8,7 +8,9 @@ label and no suggested change — see rule 9, which blocks a send. The reader
 decides what to do; the brief's job is to put the right five athletes and the
 right five figures in front of them before they decide.
 
-`{{...}}` are substitutions. `[...]` are links into the platform. Figures follow
+`{{...}}` are substitutions. `[...]` are links into the platform — see
+`../references/link-targets.md` for what each one resolves to. The alert link is
+the athlete profile's Alerts tab, never the ai-alerts list; that file says why. Figures follow
 rule 6 display precision — whole numbers for load and counts, one decimal for
 magnitudes and multipliers.
 

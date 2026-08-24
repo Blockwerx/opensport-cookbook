@@ -121,6 +121,14 @@ Use `assets/brief-template.md` verbatim. Order is fixed: what moved, framing,
 evidence, residuals, boundary. The template carries the per-field rules,
 including what a `Not real if →` and a `Worth opening →` may and may not say.
 
+Build every `[...]` marker from `references/link-targets.md`. The alert link is
+the athlete profile's Alerts tab, **not** `/ai-insights/ai-alerts/{alertId}` —
+that page windows on session date while this feed is ordered by the generation
+stamp, so exactly the alerts this brief surfaces are the ones it cannot expand.
+Where `alertId` is absent from the payload, fall back to the alerts index and
+say the link is to the list — an undisclosed downgrade is the disclosure-drop
+this skill's guardrails exist to prevent.
+
 ### 7. Gate through the critic (mandatory)
 
 Hand the draft to the `brief-critic` subagent. It returns a per-rule verdict.

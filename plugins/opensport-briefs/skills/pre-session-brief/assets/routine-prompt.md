@@ -73,7 +73,8 @@ that look like successes:
   was violated and the critic missed it.
 - **The boundary statement.** All four clauses, including "No recommendation
   is made or implied" and "Absence of a card is not clearance."
-- **Link targets.** If alert deep-links resolve to the alerts index rather than
+- **Link targets.** Built per `references/link-targets.md` — the athlete
+  profile's Alerts tab, not the ai-alerts list. If alert deep-links resolve to the alerts index rather than
   the specific alert, the brief must say so. Silent fallback is the defect —
   not the fallback itself.
 - **Length.** ~600 words. If it comes back at 1,200+, the tiering collapsed:
