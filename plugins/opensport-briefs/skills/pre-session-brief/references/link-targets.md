@@ -9,26 +9,42 @@ production. Every path below is relative to it.
 ## The alert link — use the athlete profile, not the alerts list
 
 ```
-/performance-manager/athlete-performance-dashboard/athlete/{athleteId}?tab=alerts&alert={alertId}
+/performance-manager/ai-insights/ai-alerts/{alertId}?dateFrom={sessionDate}&dateTo={sessionDate}
 ```
 
-Both ids come straight from `get_athlete_alerts`: `athleteId` is what the tool
-was called with, `alertId` is on the alert. **The query parameter is `alert`,
-not `alertId`.**
+`alertId` and `sessionDate` both come straight off the alert. **Every link
+carries its own row's date** — one brief routinely spans several sessions, so a
+single shared date breaks the majority while the first link you test still
+opens.
 
-**Do not link `/performance-manager/ai-insights/ai-alerts/{alertId}`.** It looks
-like the more direct target and it is the wrong one for this brief. That page
-resolves an id only against alerts it has already loaded — there is no by-id
-lookup behind it — and it bounds its own fetch by **session date**. This feed is
-ordered by the alert's generation stamp. The two axes disagree exactly where it
-matters: an alert this brief calls recent, raised against a session weeks
-older, is inside the generation window and outside the session-date one, so the
-link expands nothing and lands the reader on a list.
+## Why the date is on the link, and not a detail
 
-The athlete profile bounds by the generation stamp instead, which is the same
-axis the brief ranks on. It also navigates by `athleteId`, so the *navigation*
-half of the link is correct even for a merged weekly alert, where the surviving
-record's `alertId` is one of several.
+The obvious objection to this route is real, and it is what an earlier version
+of this file ruled it out on: the alerts page resolves an id only against alerts
+it has **already loaded** — there is no by-id lookup behind it — and it bounds
+its own fetch by **session date**, while an alert feed is ordered by the
+generation stamp. Two axes that disagree.
+
+They disagree only if the window is *shared*. It is not: `?dateFrom`/`?dateTo`
+are read by `useAlertDateRange` and fed into the **server query**, so pinning
+both to that row's own `sessionDate` asks for one day rather than asking one
+window to hold a heterogeneous feed. The axis mismatch dissolves per link.
+
+It also clears the harder limit, which is the cap rather than the axis. The list
+is capped — a real deployment reported *500 of 3,306 alerts* — so an unpinned
+deep link to anything outside the first page fails with *"this alert hasn't
+loaded yet."* One day's worth is comfortably inside it.
+
+And it fixes a second symptom that looks unrelated: a row that expands and then
+vanishes while you are reading it. With one day of data, paging settles at once,
+so nothing re-renders the expansion away.
+
+## What the athlete profile does instead
+
+`/performance-manager/athlete-performance-dashboard/athlete/{athleteId}?tab=alerts&alert={alertId}`
+**only scrolls to the row and highlights it.** Nothing expands. The reader
+arrives at a highlighted row they still have to click, which is most of the
+distance the link was supposed to close. Use it only as the fallback below.
 
 ## The other markers
 
