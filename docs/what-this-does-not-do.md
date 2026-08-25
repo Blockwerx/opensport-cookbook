@@ -52,6 +52,19 @@ If you want a model's opinion on a session, ask for one. You will get a
 considered answer and you will own the choice to have asked. That is a
 different thing from having one arrive uninvited.
 
+### One thing on this page is not a boundary
+
+Everything above is a decision. This is not: **the brief does not learn from
+what you decided.** The `Seen by ______` line records that a human looked, and
+that is all it records — not what they concluded, not whether the observation
+was any good, and nothing flows back into how the next brief ranks.
+
+That is a gap, not a position. Closing it needs a platform capability rather
+than something a recipe can add on its own, and it is not built yet. We say so
+here because this page is otherwise a list of things we have chosen not to do,
+and a reader could reasonably file the missing feedback loop alongside them —
+concluding we decided against it, when we have not.
+
 ## They are not a medical or injury-risk judgement
 
 Every generated brief carries this, verbatim, at any length:

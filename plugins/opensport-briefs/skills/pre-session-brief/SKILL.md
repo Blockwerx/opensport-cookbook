@@ -119,12 +119,12 @@ Use `assets/brief-template.md` verbatim. Order is fixed: what moved, framing,
 evidence, residuals, boundary. The template carries the per-field rules,
 including what a `Not real if →` and a `Worth opening →` may and may not say.
 
-Build every `[...]` marker from `references/link-targets.md`. The alert link is
-the athlete profile's Alerts tab, **not** the ai-alerts page — that one windows
-on session date while this feed orders by generation stamp, so the alerts this
-brief surfaces are exactly the ones it cannot expand. Where `alertId` is
-absent, fall back to the index **and say the link is to the list**; an
-undisclosed downgrade is the disclosure-drop these guardrails exist to prevent.
+Build every `[...]` marker from `references/link-targets.md` — the alert's own
+route with **that row's** session date pinned, which is what expands the row
+instead of landing the reader on a capped list. Read that file before composing
+one: the date is often absent, and its table says which weaker link to take when
+it is. Every downgrade is disclosed in the brief; an undisclosed one is the
+disclosure-drop these guardrails exist to prevent.
 
 ### 7. Gate through the critic (mandatory)
 
@@ -166,5 +166,6 @@ A sent email plus a one-line run log. The email fits its what-moved list on one
 phone screen without scrolling; names which signal moved per athlete with one
 figure for it; states the correct denominator in the first three lines; carries
 every falsifier, one sentence each; and ends with the verbatim boundary
-statement and the data cutoff. Target ~600 words — treat 900 as a defect to
-investigate, not a budget.
+statement and the data cutoff. Length targets live in `references/rendering.md`
+— **~190 words for a daily, ~600 for a review**, two briefs rather than one at
+two lengths. A daily at review length is a defect, not a budget spent.
