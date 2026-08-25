@@ -19,6 +19,14 @@ subagent greps for it before anything is delivered — including for the softene
 forms, because "suggested", "consider" and "pending sign-off" are the same act
 with a disclaimer attached.
 
+**That enforcement belongs to the installed plugin.** The critic is a separate
+reviewer, and a draft it refuses is not delivered. If you are running a recipe
+as a pasted prompt in a plain chat window instead — see
+[no-install-prompt.md](no-install-prompt.md) — the same rules are being
+requested of the assistant that wrote the draft, not imposed by something
+outside it. The boundary is the repository's position either way. Only one of
+the two routes can hold the line for you.
+
 The test the critic applies to every line: **could this change what an athlete
 does today?** If yes, it does not ship.
 

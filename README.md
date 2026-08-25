@@ -42,6 +42,15 @@ Then install the plugin:
 You will also need the OpenSport MCP server connected, so the skill has data to
 read. See [docs/getting-started.md](docs/getting-started.md).
 
+Two other routes, depending on who is setting it up:
+
+- **Without a terminal.** [docs/first-run.md](docs/first-run.md) walks through
+  the same install by pasting requests rather than typing commands, and covers
+  the connector, the first run and scheduling it.
+- **Without installing anything.** [docs/no-install-prompt.md](docs/no-install-prompt.md)
+  is a single prompt for a plain chat window. It reproduces the six blocking
+  rules inline, and states plainly what it gives up by doing so.
+
 ## What these recipes will not do
 
 **They report. They do not advise.** No recipe here suggests a training change,
