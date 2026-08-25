@@ -4,9 +4,13 @@ The same facts as the email, at the same density as the matching brief. Slack is
 not a paste target for the email body — the table is what makes it scannable,
 and plain text is not.
 
-`{{...}}` are substitutions. Probed rendering support, not assumed: tables,
-inline `code`, `---`, bold, italic, emoji and code blocks all render;
-**blockquotes do not**.
+`{{...}}` are substitutions. Measured by posting and reading the message back:
+tables, inline `code`, `---`, emoji, code blocks and blockquotes all render.
+
+Write **standard** markdown throughout. `**bold**` is bold; the mrkdwn-style
+`*bold*` is converted to italic, so a header written the Slack way arrives
+italic with nothing reporting an error. Links work either way — which is what
+makes a mixed template look correct while its emphasis is silently wrong.
 
 ## Which markdown this is
 

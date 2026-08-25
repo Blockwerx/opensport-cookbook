@@ -59,9 +59,21 @@ one exists, use a wordmark rather than passing off a coloured shape as a logo.
 
 ### Slack renders more than you would expect
 
-Probed, not assumed: **tables ✅**, inline `code` ✅ (renders as a monospace
-chip), `---` dividers ✅, bold/italic ✅, emoji ✅, code blocks ✅ —
-**blockquotes ❌**.
+Measured by posting and reading the message back, not assumed: **tables ✅**,
+inline `code` ✅ (a monospace chip), `---` dividers ✅, emoji ✅, code blocks
+✅, **blockquotes ✅**.
+
+**Write standard markdown, not Slack's mrkdwn.** Both survive — the MCP
+converts `[text](url)` to `<url|text>` and passes an already-`<url|text>`
+through untouched — which is exactly why a template that mixes them looks fine
+and is not. Emphasis is where it bites: `**bold**` becomes bold, but a
+mrkdwn-style `*bold*` is converted to `_italic_`. A header written the Slack way
+arrives italic and nothing reports an error.
+
+An earlier version of this file said blockquotes do not render. They do. That
+claim came from recollection rather than a probe, in a paragraph whose first
+two words are "probed, not assumed" — which is the more useful lesson than the
+fact itself.
 
 Tables matter: they are what makes the summary scannable where plain text is
 not. Put each figure in backticks so the numbers separate from the prose.
