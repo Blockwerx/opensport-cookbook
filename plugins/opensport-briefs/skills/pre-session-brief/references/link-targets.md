@@ -42,10 +42,26 @@ record's `alertId` is one of several.
 ## Two limits to state, not assume
 
 **`alertId` is not on every deployment.** It is being added to the alert
-payload; a server without it returns alerts with no id. When it is absent, fall
-back to `[all N →]` (the alerts index, which needs no id) and say in the brief
-that the link is to the list rather than the alert. Never build a link from an
-empty value.
+payload; a server without it returns alerts with no id. Never build a link from
+an empty value — and note there are **three** states here, not two, because you
+almost always still hold the `athleteId` the tool was called with:
+
+| You have | Link | Say in the brief |
+|---|---|---|
+| `athleteId` + `alertId` | the full pattern above | nothing — it does what it says |
+| `athleteId` only | the same path **without** `?alert=` — the athlete's Alerts tab | that the link opens the athlete's alerts, not the individual one |
+| neither | `/performance-manager/ai-insights/ai-alerts` | that the link is to the list |
+
+The middle row is the common one on an older deployment, and it is worth taking
+over the index: it is already scoped to the right athlete, so the reader lands
+among a handful of rows rather than the whole squad's.
+
+**Whichever row you are on, disclose the downgrade.** Shipping a link that
+silently resolves to less than the reader expects is the disclosure-drop these
+guardrails exist to prevent, and it is easy to do by accident — a partial link
+still looks like a link. Written after doing exactly that: a brief generated
+half an hour before the id reached the environment carried athlete-scoped links
+and said nothing about it.
 
 **The athlete profile sits behind the `athletes` view.** An organisation
 without that view is redirected to the alerts index rather than shown the
