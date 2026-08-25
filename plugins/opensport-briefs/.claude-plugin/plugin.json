@@ -1,0 +1,5 @@
+{
+  "name": "opensport-briefs",
+  "version": "0.1.0",
+  "description": "Generate staff-facing training-load briefs from the OpenSport MCP server. Contains the pre-session-brief skill, its output template and generation rules, and the brief-critic subagent that gates a draft before it is sent. Reports observations only — it makes no training recommendation."
+}

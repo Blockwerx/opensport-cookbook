@@ -1,0 +1,113 @@
+SYNTHETIC EXAMPLE — the figures and athletes below are invented for
+illustration. This is what the pre-session-brief skill produces, not a report
+about any real squad.
+
+─────────────────────────────────────────────────────────────────────────────
+SUBJECT   5 athletes moved most this week · sharpest: Inside Centre, No.8
+PREVIEW   47 of the 50 who trained are past threshold. No ACWR squad-wide.
+─────────────────────────────────────────────────────────────────────────────
+Mon 16 Mar · pre-session · senior squad · data to Mon 16 Mar
+Alerts re-evaluated 06:20 UTC
+
+WHAT MOVED THIS WEEK
+  ▲ A31C7E04  Inside Centre   braking, not volume  — decel 5.4 vs 2.1, +157%
+  ▲ B08F2D19  No. 8           rate of change       — week 1790 vs 720, +149%
+    C6E40A83  Flanker         volume step-change   — week 2050 vs 880, +133%
+    D172B5FC  No. 8           braking              — decel 6.9 vs 3.0, +130%
+    E9A3016B  Wing            braking on volume    — week 2310 vs 1040, +122%
+
+  ▲ = largest two excursions.  Ranked by excursion size, not by concern.
+
+READ THE 47 THE RIGHT WAY
+47 of the 50 athletes who trained this week are past threshold — 94%, not the
+59% you get by dividing into the 80-man roster. In a loading week the threshold
+separated almost nobody, so this is a fact about the week's programming rather
+than 47 athletes independently at risk.                     [all 47 →]
+
+Four further athletes were excluded from this ranking as probable measurement
+artefacts, not cleared — see the data note below.
+
+No ACWR anywhere. Checked directly rather than inferred from the alert feed:
+every athlete's chronic 28-day window is still building, so there is no ratio
+to cross-check any figure below against. Load, braking and sprint only.
+
+─────────────────────────────────────────────────────────────────────────────
+THE EVIDENCE — LARGEST TWO
+
+▲ A31C7E04 · Inside Centre · braking, not volume
+  Deceleration 5.4 against a 2.1 baseline, +157% — the largest braking
+  excursion in the squad that survives the plausibility check.
+  Session load 540 against 300, +80%: the braking is running ahead of volume.
+  Not real if → those decelerations came from contact or drill work rather
+  than repeated open-field braking.
+  Worth opening → the deceleration distribution for the session, and the
+  wellness screen.
+  Baseline basis not declared for the deceleration rule, and 2.1 sits at the
+  low end of the squad range — the 5.4 is firmer than the +157%.
+                                            [evidence →] [Fri session →]
+
+▲ B08F2D19 · No. 8 · rate of change
+  Week at 1790 AU against a 720 four-week average, +149% — the steepest ramp
+  in the squad. Session 590 against 265, +123%. Three-day rolling total 1600
+  against 750, +113%.
+  Not real if → the light prior period was a planned return-to-training block,
+  in which case the multiple measures a low denominator. You would know that;
+  the platform would not.
+  Worth opening → the session history before 09 Mar.
+  Baseline 28-day declared for the weekly figure. ACWR still building.
+                                                            [evidence →]
+
+THE EVIDENCE — THE OTHERS
+
+C6E40A83 · Flanker · volume step-change
+  Week at 2050 AU against 880, +133%. Session 660 against a 310 baseline,
+  +113%, and a new season max.
+  Not real if → the last session was a top-up after a deliberately light
+  three weeks.
+  Worth opening → the weekly series for the preceding month.
+  Baseline 28-day declared for the weekly figure.           [evidence →]
+
+D172B5FC · No. 8 · braking
+  Deceleration 6.9 against 3.0, +130% — the highest deceleration magnitude
+  recorded in the squad this week, on a plausible baseline.
+  Not real if → a scrummaging or contact block produced those stops rather
+  than open-field braking.
+  Worth opening → the session breakdown for contact content.
+  Baseline basis not declared for the deceleration rule.     [evidence →]
+
+E9A3016B · Wing · braking on volume
+  Week at 2310 AU against 1040, +122%. Accel/decel load 7200 against 3300,
+  218% of baseline. Deceleration 6.3 against 2.9, +117%. Load peaked Thursday,
+  not Friday — Friday added braking rather than more load.
+  Not real if → the decelerations were contact rather than open-field braking.
+  Worth opening → Thursday's session alongside Friday's.
+  Baseline 28-day declared for the weekly figure.
+                                            [evidence →] [Thu session →]
+
+─────────────────────────────────────────────────────────────────────────────
+ALSO
+23 athletes have alerts but no session this week — several none since the
+autumn. 7 returned no alerts at all, so their session presence is unconfirmed:
+no load data means no assessment, not a negative one.       [roster →]
+
+DATA NOTE — read before trusting any large percentage
+Four athletes were excluded from the ranking because their deceleration
+baseline is implausible: 0.7, 0.8, 0.9 and 1.1 against a squad norm near 2–3.
+Those produced excursions of +690%, +480%, +410% and +250%, and none of the
+alerts carried a baseline-building flag. Ranked as supplied, those four would
+have dominated this brief's top five. That is a measurement question — raise it
+with your OpenSport contact — not four athletes in trouble.
+
+Computed percentages are a snapshot. The engine re-evaluates historical alerts,
+so the same figure read tomorrow may differ: a deceleration alert can read 145%
+above baseline one morning and 128% two days later, because the baseline itself
+moved. Absolute figures are stable; ratios are not.
+
+Training-load pattern only. No recommendation is made or implied. Not a
+medical, injury-risk or return-to-play judgement. Absence of a card is not
+clearance.
+
+Seen by ______________  at ________
+
+Generated unattended by OpenSport from a squad sweep of 80 athletes, data to
+Mon 16 Mar. Unreviewed by any clinician. Full figures in the platform.

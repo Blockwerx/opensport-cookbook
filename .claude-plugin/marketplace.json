@@ -1,0 +1,18 @@
+{
+  "name": "opensport-cookbook",
+  "owner": {
+    "name": "Blockwerx",
+    "url": "https://github.com/Blockwerx"
+  },
+  "metadata": {
+    "description": "Worked examples for building agentic workflows on the OpenSport MCP server. Prompts, skills, subagents and generation rules you can install, read and adapt.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "opensport-briefs",
+      "source": "./plugins/opensport-briefs",
+      "description": "pre-session-brief: turn a squad-wide alert sweep into a short, tiered staff email that reports what moved and states its own limits. Includes the brief-critic gate."
+    }
+  ]
+}
