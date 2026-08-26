@@ -26,6 +26,18 @@ presence unconfirmed`.
 A rate above ~90% is a finding about the threshold, not about the athletes.
 Say which it is.
 
+**A partial set is never presented as the whole — same error, different
+clothes.** `get_squad_alerts` paginates and says so; `get_athlete_alerts` caps
+`limit` at 50 and says `Showing 50 of N … (truncated)`. Reading a prefix of a
+feed sorted by **time** and calling the result a ranking by **size** is
+dividing by the roster all over again: the population you ranked is not the
+population you describe. Measured: a brief ranked over 70 of 455 rows kept two
+of five cards once the sweep was finished, and the steepest ramp in the squad
+was never in the slice at all.
+
+Exhaust the pages before ranking. Where you cannot, say what you read — `ranked
+over the 70 rows retrieved of 455` — and never call it the squad's top five.
+
 ## 2. Never assert a baseline window the alert does not declare
 
 Windows come from a **static per-alert-type spec table** in the server's alert
@@ -63,7 +75,7 @@ Measured on a Premiership-sized roster of about 80 athletes,
 1.01** — against a squad norm of roughly 2–3 — producing excursions of
 **+800%, +500%, +500%, +424% and +254%**. None of those
 alerts carried `baselineStatus`. Nothing in the payload marked them as
-unusable, and they were the four largest excursions in the entire squad.
+unusable, and they occupied the entire top five in the squad.
 
 So screen every baseline before publishing or ranking a ratio against it.
 Three screens, because each catches what the others cannot. Apply all three.
@@ -198,6 +210,20 @@ and as a sparkline point are six renderings of one number — pick the one that
 carries the observation and drop the rest to the linked detail view.
 
 Corollary: no figure appears in both a sentence and a table.
+
+**And the same collapse applies across athletes, not just within one.** Ranking
+by excursion size is honest but it is not neutral: one rule's distribution can
+supply most of the brief. Measured on a full sweep, `High_Deceleration_Count`
+held six of the eight largest excursions, so four of five cards were braking —
+one metric's spread, which a reader will take for a squad-wide pattern unless
+the brief says otherwise.
+
+So when a single alert type supplies a majority of the cards, name it as one
+signal and say what it is: *"four of five cards are braking —
+`High_Deceleration_Count` holds six of the eight largest excursions, so read
+this as where the numbers moved most, not as four independent problems."* That
+sentence is what the templates' `{{rule_concentration_note}}` slot is for; it is
+computed per run and never written into a template.
 
 ## 8. No hedge verbs
 

@@ -75,8 +75,9 @@ These are the failures that look like successes:
   A single global claim about baselines means a rule was violated.
 - **The boundary statement**, all four clauses, including *absence of a card is
   not clearance*.
-- **Length.** Around 600–900 words. If it comes back at 1,500+, the tiering has
-  collapsed and provenance is sitting in the email instead of behind links.
+- **Length.** Around 190 words for a daily brief, 600 for a review. If a daily
+  comes back at review length, the tiering has collapsed and provenance is
+  sitting in the email instead of behind links.
 - **Artefact screening.** If the brief's largest excursions are all
   deceleration figures in the hundreds of percent, check the baselines they are
   measured against. See rule 2.

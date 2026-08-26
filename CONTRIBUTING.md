@@ -79,8 +79,17 @@ Register a new plugin in [`.claude-plugin/marketplace.json`](.claude-plugin/mark
 Keep `SKILL.md` under 8 KB — it is loaded in full whenever the skill triggers,
 so detail belongs in `references/`, which is loaded only when needed.
 
-Reference shared files by a path relative to the referencing file
-(`../_shared/brief-generation-rules.md`), never absolutely.
+Inside a skill, reference shared files by a path relative to the referencing
+file (`../_shared/brief-generation-rules.md`), never by an absolute filesystem
+path.
+
+**Subagents under `agents/` are the exception, and it matters.** A subagent has
+no guaranteed working directory once the plugin is installed, so a relative path
+resolves against wherever the session happens to be rather than against the
+agent file. Use `${CLAUDE_PLUGIN_ROOT}/…` there, and have the agent stop rather
+than continue if the read fails — an agent that is a gate on a blocking rule
+returns a verdict either way, and one reached against rules it never loaded is
+indistinguishable from a real pass.
 
 ## Testing a change
 

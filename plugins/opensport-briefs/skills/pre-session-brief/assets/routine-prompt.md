@@ -73,9 +73,10 @@ that look like successes:
   was violated and the critic missed it.
 - **The boundary statement.** All four clauses, including "No recommendation
   is made or implied" and "Absence of a card is not clearance."
-- **Link targets.** Built per `references/link-targets.md` — the athlete
-  profile's Alerts tab, not the ai-alerts list. If alert deep-links resolve to the alerts index rather than
-  the specific alert, the brief must say so. Silent fallback is the defect —
-  not the fallback itself.
-- **Length.** ~600 words. If it comes back at 1,200+, the tiering collapsed:
-  provenance is in the email instead of behind links.
+- **Link targets.** Built per `references/link-targets.md` — the alert's own
+  ai-alerts route with that row's session date pinned, each link carrying its
+  own date. If a link resolves to anything weaker than the opened alert, the
+  brief must say so. Silent fallback is the defect — not the fallback itself.
+- **Length.** ~190 words for the daily, ~600 for the review — the two targets
+  in `references/rendering.md`. If the daily comes back at 600, it has become
+  the review with things deleted, and what gets deleted first is the caveats.
