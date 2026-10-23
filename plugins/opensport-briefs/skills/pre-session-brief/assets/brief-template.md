@@ -8,12 +8,16 @@ label and no suggested change — see rule 9, which blocks a send. The reader
 decides what to do; the brief's job is to put the right five athletes and the
 right five figures in front of them before they decide.
 
-`{{...}}` are substitutions. `[...]` are links into the platform — see
-`../references/link-targets.md` for what each one resolves to. The alert link is the
-alert's own route with its session date pinned, which is what makes it expand
-rather than merely highlight; that file says why. Figures follow
-rule 6 display precision — whole numbers for load and counts, one decimal for
-magnitudes and multipliers.
+`{{...}}` are substitutions, and every figure one fills is an MCP field or a
+rule-defined count (rule 12): if the field is missing, the element is left out,
+never filled in. `[...]` are links into the platform — see
+`../references/link-targets.md` for what each one resolves to: the configured
+`appHost` plus the athlete's Alerts-tab route, which opens the exact alert. No
+host is written here. Figures follow rule 6 display precision — whole numbers
+for load and counts, one decimal for magnitudes and multipliers.
+
+There is no review, feedback or "learning loop" section, and none may be added:
+no MCP tool returns those counts.
 
 ---
 
@@ -118,7 +122,7 @@ Card rules:
 - `baseline_provenance` is that card's own declared window and sufficiency —
   `Baseline 28-day declared` or `Baseline basis not declared for this rule`.
   Per card, never global.
-- Every card has every field. A field with no data reads
+- Every card has every field. A field with no data carries no figure — it reads
   `Load history unavailable for this athlete`, never nothing.
 
 ---

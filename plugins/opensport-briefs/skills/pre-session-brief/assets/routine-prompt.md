@@ -19,9 +19,10 @@ Cards: 5
 Report observations only — no suggestions, no recommendations, no status
 labels.
 
-Send to the configured recipients when the brief-critic gate passes. If a
-blocking rule fails after one revision pass, do not send — reply to me with the
-failing rule and the offending lines instead.
+Send to the configured recipients only when the brief-critic gate passes and
+the fidelity check passes. If either still fails after one revision pass, do
+not send — reply to me with the failing rule or the unmatched figures and links
+instead.
 ```
 
 ---
@@ -55,9 +56,11 @@ it to the skill as an early exit rather than trying to encode it here.
 | Which tools are called, in what order | `SKILL.md` steps |
 | How strictly it's enforced | `agents/brief-critic.md` |
 | Recipients, cadence, squad | this prompt |
+| The platform host links point at | `assets/brief-config.json` |
+| What counts as a traceable figure | `scripts/check_fidelity.py` |
 
 Do not add output instructions to this prompt. If the brief is wrong, one of
-the four files above is wrong, and fixing it there fixes every future run.
+the files above is wrong, and fixing it there fixes every future run.
 
 ## First-run checklist
 
@@ -73,10 +76,14 @@ that look like successes:
   was violated and the critic missed it.
 - **The boundary statement.** All four clauses, including "No recommendation
   is made or implied" and "Absence of a card is not clearance."
-- **Link targets.** Built per `references/link-targets.md` — the alert's own
-  ai-alerts route with that row's session date pinned, each link carrying its
-  own date. If a link resolves to anything weaker than the opened alert, the
-  brief must say so. Silent fallback is the defect — not the fallback itself.
+- **Link targets.** Built per `references/link-targets.md` — the configured
+  host plus the athlete's Alerts-tab route with that row's `alertId`. Click one
+  signed out: after sign-in it should land on that alert, opened. If a link
+  resolves to anything weaker than the opened alert, the brief must say so.
+  Silent fallback is the defect — not the fallback itself.
+- **Fidelity.** The run log should record a fidelity pass. Spot-check two
+  figures against the saved payloads yourself on the first run; a figure you
+  cannot find there is a defect in the check, not a judgement call.
 - **Length.** ~190 words for the daily, ~600 for the review — the two targets
   in `references/rendering.md`. If the daily comes back at 600, it has become
   the review with things deleted, and what gets deleted first is the caveats.

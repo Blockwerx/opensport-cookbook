@@ -2,7 +2,7 @@
 name: brief-critic
 description: >
   Adversarial reviewer for a drafted OpenSport pre-session brief. Checks the
-  draft against the eleven brief-generation rules and returns a per-rule verdict
+  draft against the twelve brief-generation rules and returns a per-rule verdict
   with quoted offending lines. Invoked by the `pre-session-brief` skill as a
   mandatory gate before any brief is sent; also useful standalone when asked to
   "check this brief", "review the brief draft", or "will this brief pass the
@@ -35,7 +35,7 @@ internal consistency and say which checks you could not perform.
 
 ## How to review
 
-Work rule by rule, 1 through 11. For each, return one of:
+Work rule by rule, 1 through 12. For each, return one of:
 
 - `PASS`
 - `FAIL` — with the offending line quoted verbatim and what specifically is
@@ -111,6 +111,22 @@ declined to name the rest. Including
 clearance". A workflow caveat about sign-off does not satisfy this — and its
 presence is itself a rule 9 FAIL. A missing clause is a FAIL even when the
 others are exact.
+
+**Rule 12 — only MCP fields (blocking).** Numbers are traced mechanically by
+`scripts/check_fidelity.py`, which runs after you; do not try to replicate it.
+Your half is what it cannot read:
+
+- Any review, feedback, "actioned" or "learning loop" line, with or without a
+  number — FAIL. No MCP tool returns those counts.
+- Any statistic word (`maximum`, `peak`, `median`, `average`) on a baseline the
+  payload does not describe that way — FAIL where you have the payload,
+  UNCHECKABLE where you do not.
+- Narrative no field states — match context, post-match commentary, a cause —
+  FAIL. Quote it.
+- A placeholder (`{{…}}`), or an element filled with a typical, squad or
+  estimated value because the athlete's own field was missing — FAIL. A missing
+  field leaves the element out; at most the card says, without a figure, that
+  the field is unavailable.
 
 ## Two judgements beyond the rules
 

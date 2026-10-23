@@ -20,7 +20,15 @@
   Links, one target each: {{alert_link}} per row, {{screened_link}} for what the
   screens removed, {{alerts_index}} for the footer. Do not point two of them at
   one value - "see it" landing on the index is the silent downgrade
-  ../references/link-targets.md exists to prevent.
+  ../references/link-targets.md exists to prevent. Each is a finished absolute
+  URL: appHost from brief-config.json plus a route from link-targets.md. There
+  is deliberately no host placeholder in this file - a host left unfilled ships
+  links that go nowhere.
+
+  Every figure substituted here is an MCP field or a rule-defined count (rule
+  12). A missing field leaves its element out - no row, no figure - and there is
+  no review or "learning loop" block. scripts/check_fidelity.py runs on the
+  rendered result before it is sent.
 
   Tables, bgcolor and inline style only. No <svg>, no data: URIs, no CSS
   custom properties, no external stylesheets - all stripped by Gmail.

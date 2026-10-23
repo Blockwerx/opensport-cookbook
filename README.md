@@ -17,7 +17,10 @@ blocks output which breaks those rules.
 Supporting pieces for that recipe:
 
 - [`brief-generation-rules.md`](plugins/opensport-briefs/skills/_shared/brief-generation-rules.md)
-  — eleven rules the output is held to. Five of them block a send.
+  — twelve rules the output is held to. Seven of them block a send.
+- [`check_fidelity.py`](plugins/opensport-briefs/skills/pre-session-brief/scripts/check_fidelity.py)
+  — a deterministic check, run before every send, that each figure and link in
+  the brief traces to the MCP payloads it was built from.
 - [`brief-critic`](plugins/opensport-briefs/agents/brief-critic.md) — a subagent
   that reviews each draft against those rules and refuses the ones that fail.
 - [`brief-template.md`](plugins/opensport-briefs/skills/pre-session-brief/assets/brief-template.md)

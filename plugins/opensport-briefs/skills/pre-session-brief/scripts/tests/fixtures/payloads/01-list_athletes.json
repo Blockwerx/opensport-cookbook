@@ -1,0 +1,18 @@
+{
+  "tool": "list_athletes",
+  "arguments": {
+    "limit": 200
+  },
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "6 athletes in the organization (showing all 6)."
+      },
+      {
+        "type": "text",
+        "text": "[{\"id\": \"0a1b2c3d-0000-4000-8000-000000000001\", \"displayName\": \"Athlete 1A2B3C4D\", \"primaryPosition\": \"Back\", \"primaryGroup\": \"Senior\", \"status\": \"Ready\", \"topSpeed\": null, \"favourite\": false}, {\"id\": \"0a1b2c3d-0000-4000-8000-000000000002\", \"displayName\": \"Athlete 2B3C4D5E\", \"primaryPosition\": \"Forward\", \"primaryGroup\": \"Senior\", \"status\": \"Ready\", \"topSpeed\": null, \"favourite\": false}, {\"id\": \"0a1b2c3d-0000-4000-8000-000000000003\", \"displayName\": \"Athlete 3C4D5E6F\", \"primaryPosition\": \"Forward\", \"primaryGroup\": \"Senior\", \"status\": \"Ready\", \"topSpeed\": null, \"favourite\": false}, {\"id\": \"0a1b2c3d-0000-4000-8000-000000000004\", \"displayName\": \"Athlete 4D5E6F70\", \"primaryPosition\": \"Back\", \"primaryGroup\": \"Senior\", \"status\": \"Ready\", \"topSpeed\": null, \"favourite\": false}, {\"id\": \"0a1b2c3d-0000-4000-8000-000000000005\", \"displayName\": \"Athlete 5E6F7081\", \"primaryPosition\": \"Forward\", \"primaryGroup\": \"Senior\", \"status\": \"Ready\", \"topSpeed\": null, \"favourite\": false}, {\"id\": \"0a1b2c3d-0000-4000-8000-000000000006\", \"displayName\": \"Athlete 6F708192\", \"primaryPosition\": \"Back\", \"primaryGroup\": \"Senior\", \"status\": \"Ready\", \"topSpeed\": null, \"favourite\": false}]"
+      }
+    ]
+  }
+}
