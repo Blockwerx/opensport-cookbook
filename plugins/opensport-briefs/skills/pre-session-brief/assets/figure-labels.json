@@ -1,0 +1,22 @@
+{
+  "_comment": "Which payload fields a brief figure may match, by the label it carries. 'brief' phrases are matched as whole words in the figure's clause (counts) or within 3 words (measures); 'suffix' is matched immediately after the number. 'fields' are fnmatch globs over Candidate.field (<tool>.<leafKey>, <tool>.headline, derived.<name>, derived.<a>/<b>).",
+  "smallIntegerBelow": 10,
+  "counts": {
+    "roster":            {"brief": ["athlete", "athletes", "player", "players", "squad", "roster"],
+                          "fields": ["derived.roster", "list_athletes.headline"]},
+    "trained":           {"brief": ["trained", "training this week"], "fields": ["derived.trained"]},
+    "flagged":           {"brief": ["past threshold", "flagged", "the right way"], "fields": ["derived.flagged"]},
+    "carded":            {"brief": ["to look at", "moved most", "carded", "cards", "largest"], "fields": ["derived.carded"]},
+    "alerted":           {"brief": ["with alerts", "alerted", "had alerts"], "fields": ["derived.alerted"]},
+    "red":               {"brief": ["red", "reds"], "fields": ["derived.red"]},
+    "noSessionInWindow": {"brief": ["no session", "outside the window", "no sessions"], "fields": ["derived.noSessionInWindow"]},
+    "unclassified":      {"brief": ["no alerts", "returned no alerts"], "fields": ["derived.unclassified"]},
+    "screened":          {"brief": ["screened", "excluded"], "fields": ["derived.screened"]}
+  },
+  "measures": {
+    "percent":  {"suffix": "%", "fields": ["*.percentage*", "*.percent*", "derived.*/*", "*.message", "*.definition", "*.headline"]},
+    "window":   {"suffix": "-day", "fields": ["*WindowDays", "*.windowDays", "*.message", "*.definition"]},
+    "ratio":    {"brief": ["acr", "ratio"], "fields": ["*.ratio", "*Ratio"]}
+  },
+  "inAthleteRowDefault": ["*.observedValue", "*.baselineValue", "*.value", "*.thresholdValue", "*WindowDays", "*.ratio", "*.acuteLoad", "*.chronicLoad", "*.headline"]
+}
