@@ -65,6 +65,17 @@ the plain-text alternative too. A figure changed after the check is unchecked.
   *median*, *average / mean* or *minimum* must come from a field whose name,
   rule or definition says the same. A median quoted as a 28-day maximum fails
   even though the value is real.
+- **The label matches.** A number must equal a field that its own label names,
+  per `assets/figure-labels.json`. Count words anywhere in the number's clause
+  (*trained*, *past threshold*, *carry a red*, *athletes*, …) restrict it to
+  those derived counts — "3 carry a red" fails when 3 athletes are flagged but
+  one is red. A measure binds tightly — a `%` or `-day` suffix, or *ACR* /
+  *ratio* within three words — and restricts it to percentage, window or ratio
+  fields. A whole number below 10 with no label fails outside an athlete row:
+  small integers are everywhere in the payloads (severity-band counts, window
+  lengths), so value alone traces nothing. Inside an athlete row, an unlabelled
+  small number may only be one of that athlete's alert measurements
+  (`inAthleteRowDefault`). Every failure of this kind names the label table.
 - **No review or feedback figures.** A number beside *reviewed*, *actioned*,
   *feedback*, *intervention* or *learning loop* fails: no OpenSport MCP tool
   returns those counts, so any such figure was made up.
@@ -77,13 +88,33 @@ the plain-text alternative too. A figure changed after the check is unchecked.
 
 ## What it does not prove
 
-- **That a matched number is the right one.** Matching is by value. A small
-  integer outside an athlete row can coincide with an unrelated field; the
-  per-row scoping and the statistic check narrow this, they do not close it.
+- **That a matched number is the right one.** Matching is by value within the
+  fields a label allows. Labels narrow the candidates; they do not identify
+  the one field the figure was taken from. A number of 10 or more with no
+  label still matches by value alone.
+- **An invented count that equals a count named beside it.** Several count
+  labels in one clause are an OR, because a sentence such as "3 of the 4
+  athletes who trained are past threshold, not 3 of 6" names its counts
+  anywhere in the clause, not next to each number. So an invented count passes
+  if it happens to equal any derived count the clause names: "4 athletes past
+  threshold trained twice" passes when 4 trained, and *athletes* is itself the
+  roster label, so "6 athletes did extras" passes on a 6-athlete roster. The
+  critic, not this check, catches a true number attached to a false claim.
 - **Prose.** A sentence with no number — an invented match report, a cause — is
   not checked here. Rule 12 still forbids it; the critic checks it.
 - **Unit and phrasing.** "% of" versus "% above", and units, are rules 4 and 5,
   for the critic.
+
+## The label table
+
+`assets/figure-labels.json` is the one place the brief's wording meets the
+payload's field names: `counts` (phrase → derived count), `measures` (suffix or
+phrase → field globs), `smallIntegerBelow`, and `inAthleteRowDefault`. A
+template that renames a count — "who trained" becoming "who played" — leaves
+its number unlabelled. `scripts/tests` renders every count slot in
+`brief-template.md`, `slack-template.md` and `email-daily.html` and fails if a
+slot lost its label, so change a template's count wording and the table
+together. A new `{{slot}}` in a template must also be classified in that test.
 
 When the check fails, fix the brief — remove the element whose field is
 missing — and re-run it. Do not add a payload, edit one, or declare a derived

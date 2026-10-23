@@ -61,7 +61,7 @@ the evidence below.
 READ THE {{flagged}} THE RIGHT WAY
 {{flagged}} of the {{trained}} athletes who trained this week are past
 threshold — not {{flagged}} of {{roster}}. {{discrimination_note}}
-                                                          [all {{flagged}} →]
+                                           [all {{flagged}} past threshold →]
 {{artefact_note}}
 
 {{limitation_line}}

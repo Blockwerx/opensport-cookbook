@@ -14,6 +14,9 @@ the critic cannot answer reliably by reading:
    median quoted as a maximum fails even though the value matches. A number next
    to a review / feedback word fails unless a payload field is about reviews --
    no OpenSport MCP tool returns one today.
+   A number must also carry a label from assets/figure-labels.json that names
+   the field it came from (a count word in its clause, a measure beside it);
+   a whole number below 10 with no label fails outside an athlete row.
 
 2. Every link uses the configured platform host, carries no unfilled template
    placeholder, matches a route in references/link-targets.md, and names ids
@@ -29,6 +32,7 @@ Exit status: 0 pass, 1 fail, 2 bad input. See references/fidelity-check.md.
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import html.parser
 import json
 import re
@@ -40,6 +44,9 @@ from urllib.parse import parse_qs, urlsplit
 
 HERE = Path(__file__).resolve().parent
 DEFAULT_CONFIG = HERE.parent / "assets" / "brief-config.json"
+LABELS_FILE = "assets/figure-labels.json"
+LABELS = json.loads((HERE.parent / LABELS_FILE).read_text())
+SMALL = LABELS["smallIntegerBelow"]
 
 # --------------------------------------------------------------------------
 # Vocabulary
@@ -97,6 +104,7 @@ class Candidate:
     source: str           # human-readable path, e.g. 03-get_acr.json:result.ratio
     tokens: frozenset     # provenance tokens for the concept check
     athlete: str | None = None  # whose payload it came from; None = squad-wide
+    field: str = ""      # <tool>.<leafKey> | <tool>.headline | derived.<name>
 
 
 @dataclass
@@ -136,14 +144,15 @@ def load_payloads(paths: list[Path]) -> Payloads:
             if context_athlete:
                 p.athlete_ids.add(context_athlete)
             label = f"{f.name}:{doc['tool']}"
+            tool = doc["tool"]
             doc = doc["result"]
         else:
-            label = f.name
-        _walk_result(doc, label, p, context_athlete)
+            label, tool = f.name, f.stem
+        _walk_result(doc, label, p, context_athlete, tool)
     return p
 
 
-def _walk_result(doc, label, p, athlete):
+def _walk_result(doc, label, p, athlete, tool):
     """An MCP CallToolResult carries JSON as text items; unwrap them."""
     if isinstance(doc, dict) and isinstance(doc.get("content"), list):
         for i, item in enumerate(doc["content"]):
@@ -153,16 +162,17 @@ def _walk_result(doc, label, p, athlete):
             try:
                 inner = json.loads(text)
             except ValueError:
-                _add_prose(text, f"{label}.content[{i}] (headline)", set(), p, athlete)
+                _add_prose(text, f"{label}.content[{i}] (headline)", set(), p, athlete,
+                           f"{tool}.headline")
                 continue
-            _walk(inner, f"{label}.content[{i}]", p, athlete, [])
+            _walk(inner, f"{label}.content[{i}]", p, athlete, [], tool)
         if "structuredContent" in doc:
-            _walk(doc["structuredContent"], f"{label}.structuredContent", p, athlete, [])
+            _walk(doc["structuredContent"], f"{label}.structuredContent", p, athlete, [], tool)
     else:
-        _walk(doc, label, p, athlete, [])
+        _walk(doc, label, p, athlete, [], tool)
 
 
-def _walk(node, path, p, athlete, keys):
+def _walk(node, path, p, athlete, keys, tool):
     if isinstance(node, dict):
         descr = set()
         for k in DESCRIPTOR_KEYS & node.keys():
@@ -177,21 +187,21 @@ def _walk(node, path, p, athlete, keys):
             p.alert_rows.append((row_athlete, node["alertId"]))
             _collect_session_dates(node, row_athlete, p)
         for k, v in node.items():
-            _walk_leaf(k, v, f"{path}.{k}", p, row_athlete, keys + [k], descr)
+            _walk_leaf(k, v, f"{path}.{k}", p, row_athlete, keys + [k], descr, tool)
     elif isinstance(node, list):
         for i, v in enumerate(node):
-            _walk(v, f"{path}[{i}]", p, athlete, keys)
+            _walk(v, f"{path}[{i}]", p, athlete, keys, tool)
 
 
-def _walk_leaf(k, v, path, p, athlete, keys, descr):
+def _walk_leaf(k, v, path, p, athlete, keys, descr, tool):
     if isinstance(v, (dict, list)):
-        _walk(v, path, p, athlete, keys)
+        _walk(v, path, p, athlete, keys, tool)
         return
     tokens = frozenset(split_tokens(" ".join(keys)) | descr)
     if isinstance(v, bool) or v is None:
         return
     if isinstance(v, (int, float)):
-        p.numbers.append(Candidate(float(v), path, tokens, athlete))
+        p.numbers.append(Candidate(float(v), path, tokens, athlete, f"{tool}.{k}"))
         return
     if not isinstance(v, str):
         return
@@ -206,14 +216,14 @@ def _walk_leaf(k, v, path, p, athlete, keys, descr):
             p.times.setdefault(f"{int(m[4])}:{m[5]}", path)
         return
     if " " in v:  # prose field: its numbers are named by the field
-        _add_prose(v, path, set(tokens), p, athlete)
+        _add_prose(v, path, set(tokens), p, athlete, f"{tool}.{k}")
 
 
-def _add_prose(text, path, tokens, p, athlete=None):
+def _add_prose(text, path, tokens, p, athlete=None, fieldname=""):
     tokens = frozenset(tokens | split_tokens(text))
     for fig in extract_figures(text):
         if fig.kind == "number":
-            p.numbers.append(Candidate(fig.value, f"{path} (text)", tokens, athlete))
+            p.numbers.append(Candidate(fig.value, f"{path} (text)", tokens, athlete, fieldname))
         elif fig.kind == "date" and fig.value[0] is not None:
             p.dates.setdefault(fig.value, f"{path} (text)")
 
@@ -245,11 +255,14 @@ class _HTMLText(html.parser.HTMLParser):
         self.rows: list[tuple[int, int, set]] = []  # (start, end, athletes linked)
         self._open_rows: list[tuple[int, set]] = []
         self._skip = 0
+        self._pre = 0
         self._len = 0
 
     def handle_starttag(self, tag, attrs):
         if tag in ("style", "script", "head", "title"):
             self._skip += 1
+        if tag == "pre":
+            self._pre += 1
         if tag in BLOCK_TAGS:
             self._add("\n")
         if tag == "a":
@@ -265,6 +278,8 @@ class _HTMLText(html.parser.HTMLParser):
     def handle_endtag(self, tag):
         if tag in ("style", "script", "head", "title"):
             self._skip = max(0, self._skip - 1)
+        if tag == "pre":
+            self._pre = max(0, self._pre - 1)
         if tag in BLOCK_TAGS:
             self._add("\n")
         if tag == "tr" and self._open_rows:
@@ -273,7 +288,9 @@ class _HTMLText(html.parser.HTMLParser):
 
     def handle_data(self, data):
         if not self._skip:
-            self._add(data)
+            # Outside <pre>, a newline in the source is only whitespace; left
+            # in, it would end the clause and cut a label off its number.
+            self._add(data if self._pre else re.sub(r"\s+", " ", data))
 
     def _add(self, s):
         self.parts.append(s)
@@ -354,6 +371,9 @@ class Figure:
     decimals: int
     context: str
     concepts: set
+    counts: set = field(default_factory=set)    # count kinds named in the clause
+    measures: set = field(default_factory=set)  # measure kinds attached to the number
+    small: bool = False
 
 
 def extract_figures(text: str) -> list[Figure]:
@@ -380,8 +400,10 @@ def extract_figures(text: str) -> list[Figure]:
     for m in NUMBER.finditer(masked):
         decimals = len(m.group(3)) - 1 if m.group(3) else 0
         ctx = _context(text, m)
+        counts, measures = _labels_near(text, m)
+        small = decimals == 0 and not m.group(4) and _num(m) < SMALL
         figures.append(Figure("number", m.group(0).strip(), m.start(), _num(m), decimals, ctx,
-                              _concepts_near(text, m)))
+                              _concepts_near(text, m), counts, measures, small))
     return figures
 
 
@@ -405,6 +427,37 @@ def _concepts_near(text, m) -> set:
     after = re.findall(r"[A-Za-z]+", text[m.end():end])[:CONTEXT_WORDS]
     words = {w.lower() for w in before + after}
     return {name for name, (brief_words, _) in CONCEPTS.items() if words & brief_words}
+
+
+def _has_phrase(text: str, phrase: str) -> bool:
+    return re.search(r"\b" + re.escape(phrase) + r"\b", text, re.I) is not None
+
+
+def _labels_near(text, m) -> tuple[set, set]:
+    """Label kinds a number carries. A measure attaches tightly (a suffix right
+    after the number, or a word within CONTEXT_WORDS); a count is named anywhere
+    in the clause, because "1 of 5 athletes ... carry a red" names the 1 last."""
+    start, end = _clause_bounds(text, m)
+    after = text[m.end():m.end() + 12]
+    near = re.findall(r"[A-Za-z]+", text[start:m.start()])[-CONTEXT_WORDS:] + \
+        re.findall(r"[A-Za-z]+", text[m.end():end])[:CONTEXT_WORDS]
+    near_text = " ".join(near)
+    measures = set()
+    for kind, spec in LABELS["measures"].items():
+        suf = spec.get("suffix")
+        if (suf and (m.group(4) if suf == "%" else after.lower().startswith(suf))) or \
+                any(_has_phrase(near_text, w) for w in spec.get("brief", [])):
+            measures.add(kind)
+    if "percent" in measures:  # a rate is a rate, whatever the clause counts
+        return set(), {"percent"}
+    clause = text[start:end]
+    counts = {kind for kind, spec in LABELS["counts"].items()
+              if any(_has_phrase(clause, w) for w in spec["brief"])}
+    return counts, measures
+
+
+def _fits(c: "Candidate", globs) -> bool:
+    return any(fnmatch.fnmatchcase(c.field, g) for g in globs)
 
 
 # --------------------------------------------------------------------------
@@ -446,12 +499,13 @@ def derive(run: dict, p: Payloads, errors: list[str]) -> list[Candidate]:
                 if not any(lo <= d <= hi for d in p.athlete_dates.get(aid, ())):
                     errors.append(f"derived 'trained' lists {aid}, but no alert row for that "
                                   f"athlete has a session dated {lo}..{hi}")
-    out = [Candidate(float(len(s)), f"derived:{n}", frozenset(split_tokens(n)))
-           for n, s in sets.items()]
+    out = [Candidate(float(len(s)), f"derived:{n}", frozenset(split_tokens(n)), None,
+                     f"derived.{n}") for n, s in sets.items()]
     for a, b in RATES:
         if a in sets and b in sets and sets[b]:
             out.append(Candidate(100.0 * len(sets[a]) / len(sets[b]),
-                                 f"derived:{a}/{b} rate", frozenset({"rate"})))
+                                 f"derived:{a}/{b} rate", frozenset({"rate"}), None,
+                                 f"derived.{a}/{b}"))
     return out
 
 
@@ -484,6 +538,25 @@ def check_number(fig: Figure, pool: list[Candidate], athlete: str | None = None
                                "review or feedback counts")
             return False, (f"stated as a {concept}, but no field with this value is "
                            f"described as a {concept}")
+    # Label match. Measures bind tightly and apply everywhere; counts are
+    # squad-level only -- inside an athlete row the clause's count words
+    # describe the squad, not the row's figure.
+    kinds = set(fig.measures) | (set() if athlete else set(fig.counts))
+    globs = [g for k in fig.measures for g in LABELS["measures"][k]["fields"]]
+    if not athlete:
+        globs += [g for k in fig.counts for g in LABELS["counts"][k]["fields"]]
+    if not globs and fig.small:
+        if not athlete:
+            return False, (f"small whole number with no label from {LABELS_FILE}; "
+                           f"value-only matching cannot tell it from any other small "
+                           f"number -- name the count, or add its wording to the table")
+        globs = LABELS["inAthleteRowDefault"]
+        kinds = {"inAthleteRowDefault"}
+    if globs:
+        hits = [c for c in hits if _fits(c, globs)]
+        if not hits:
+            return False, (f"labelled as {' / '.join(sorted(kinds))} in {LABELS_FILE}, "
+                           f"but no field that label allows has this value")
     return True, hits[0].source
 
 

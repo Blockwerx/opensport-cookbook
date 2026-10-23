@@ -70,7 +70,7 @@ control:
 | Marker | Route |
 |---|---|
 | `[evidence →]` / `open →` | the alert link above |
-| `[all N →]` | `/performance-manager/ai-insights/ai-alerts` — the alerts index |
+| `[all N past threshold →]` | `/performance-manager/ai-insights/ai-alerts` — the alerts index |
 | `[roster →]` | `/performance-manager/athlete-performance-dashboard` |
 | `[<date> session →]` | `/performance-manager/data-health/{sessionExternalId}` — the session id the alert and session-metrics tools return verbatim (e.g. `catapult-0d34719d-…`) |
 

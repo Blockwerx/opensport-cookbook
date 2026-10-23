@@ -1,0 +1,10 @@
+{
+  "tool": "get_squad_alerts",
+  "arguments": {"startDate": "2026-10-15", "endDate": "2026-10-21"},
+  "result": {
+    "content": [
+      {"type": "text", "text": "Squad alerts with sessions 2026-10-15 to 2026-10-21."},
+      {"type": "text", "text": "{\"summary\": {\"bySeverityBand\": {\"red\": 1, \"amber\": 2, \"yellow\": 2}}}"}
+    ]
+  }
+}

@@ -93,6 +93,7 @@ to your setup rather than taking it on faith.
 | To change | Edit |
 |---|---|
 | What the email looks like | `assets/brief-template.md` |
+| Which wording names which figure (the fidelity check's labels) | `assets/figure-labels.json` |
 | What is and isn't allowed in the output | `skills/_shared/brief-generation-rules.md` |
 | Which tools are called, in what order | the skill's `SKILL.md` |
 | How strictly it's enforced | `agents/brief-critic.md` |
