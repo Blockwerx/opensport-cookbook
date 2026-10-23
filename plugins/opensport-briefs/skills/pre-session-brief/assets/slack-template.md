@@ -4,7 +4,12 @@ The same facts as the email, at the same density as the matching brief. Slack is
 not a paste target for the email body — the table is what makes it scannable,
 and plain text is not.
 
-`{{...}}` are substitutions. Measured by posting and reading the message back:
+`{{...}}` are substitutions, under the same contract as the email: every
+figure an MCP field or a rule-defined count (rule 12), every link built per
+`../references/link-targets.md`. Run `scripts/check_fidelity.py` on the rendered
+message before posting it, exactly as for the email.
+
+Measured by posting and reading the message back:
 tables, inline `code`, `---`, emoji, code blocks and blockquotes all render.
 
 Write **standard** markdown throughout. `**bold**` is bold; the mrkdwn-style

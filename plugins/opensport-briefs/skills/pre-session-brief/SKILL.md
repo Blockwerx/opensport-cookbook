@@ -29,20 +29,18 @@ The brief reports and stops: no instruction, no availability verdict, no
 suggested change — rule 9 blocks a send on any of those. Staff decide; the
 brief puts the right athletes and figures in front of them first.
 
-The failure mode this skill exists to prevent is not missing data — it is a
-complete, correct, unreadable brief. A draft that states every figure twice, in
-four unit systems, behind five repetitions of an AI disclaimer, is a draft
-nobody reads. Completeness lives behind links.
+The failure to prevent is a complete, correct, unreadable brief — every figure
+twice, behind repeated disclaimers. Completeness lives behind links.
 
-Before drafting anything, load `../_shared/brief-generation-rules.md`. Those eleven
-rules are the acceptance criteria, and rules 1, 3, 4, 9, 10 and 11 block a
-send.
+Before drafting anything, load `../_shared/brief-generation-rules.md`. Those twelve
+rules are the acceptance criteria, and rules 1, 3, 4, 9, 10, 11 and 12 block a
+send. Rule 12 is the floor under all of them: **render only MCP fields; a
+missing field leaves the element out, never filled in.**
 
 ## Inputs
 
-Session date (default today), data window (7 days back), cards to show
-(default 5; 4–6 acceptable, never pad to a number), recipients (from the
-routine).
+Session date (default today), window (7 days back), cards (default 5; 4–6
+acceptable, never pad), recipients (from the routine).
 
 ## Steps
 
@@ -56,6 +54,9 @@ cap, and the `aggregationType` attribution rules.
 
 Either way, call `list_athletes` for the roster total, positions and groups.
 
+**Save every tool result verbatim** (this step's and step 4's) per
+`references/fidelity-check.md` — the send gate checks the brief against them.
+
 ### 2. Establish the denominators before anything else
 
 Most likely step to be skipped; rule 1 blocks the send without it. From the
@@ -65,10 +66,9 @@ alert rows' `sessionDate`, partition the roster:
 - **no session in window** — has alerts, none in window
 - **unclassified** — returned no alerts at all; session presence unconfirmed
 
-The headline rate is `past threshold ÷ trained`, never `÷ roster`. If that rate
-is above ~90%, the finding is that the threshold barely discriminated on a
-loading week — lead with that, because it is a statement about the session
-plan, and it is the most useful thing in the brief.
+The headline rate is `past threshold ÷ trained`, never `÷ roster`. Above ~90%,
+the finding is that the threshold barely discriminated on a loading week —
+lead with that; it is the most useful thing in the brief.
 
 ### 3. Rank, and be explicit that it is a ranking
 
@@ -81,13 +81,12 @@ Then: recency gate → distinct alert families → severity, **excluding
 still-building** → magnitude of the dominant *above-baseline* excursion →
 session date.
 
-Two guards on that magnitude step, both in `references/squad-sweep.md`: rank
-only *above-baseline* excursions (the field is signed — an underload is not a
-loading risk), and apply rule 2's three baseline screens before ranking. On a
-live sweep, five of the top five raw excursions were deceleration artefacts.
+Two guards (`references/squad-sweep.md`): rank only *above-baseline*
+excursions — an underload is not a loading risk — and apply rule 2's three
+baseline screens first. On a live sweep, all top five raw excursions were
+deceleration artefacts.
 
-State how many were flagged and how many are shown. Five cards out of fifty
-flagged is a tenth of the sweep; say so and link the rest.
+State how many were flagged and how many are shown, and link the rest.
 
 ### 4. Fill the evidence for shortlisted athletes only
 
@@ -98,62 +97,68 @@ cards):
 - `get_athlete_session_metrics` — the individual session rows for the strip
 - `get_acr` — the ratio, band and data-sufficiency flag
 
-Give every card the same fields. If one athlete's load history is unavailable,
-the card says so; it does not silently omit the field while a sibling card
-carries it.
+Give every card the same fields. Where one athlete's field is missing, the
+card says so in words — no figure (rule 12) — rather than silently omitting
+what a sibling card carries.
 
 ### 5. Identify which signal moved
 
 One phrase per card: `braking, not volume` / `volume step-change` / `rate of
-change` / `speed exposure`. This is attribution — it names the signal the
-figures point at. It is **not** a routing decision: never pair it with an
-intervention or say what it means for today's session (rule 9).
+change` / `speed exposure`. Attribution, **not** a routing decision: never pair
+it with an intervention or say what it means for today's session (rule 9).
 
-Where two signals are confounded by session content — a front-row forward's
-volume and braking, both inflated by scrummaging — say they are one signal and
-name the confound. That is a caveat on the reading, which is allowed.
+Where session content confounds two signals (scrummaging inflates a front-row
+forward's volume and braking alike), say they are one signal and name the
+confound — a caveat on the reading, which is allowed.
 
 ### 6. Draft against the template
 
-Use `assets/brief-template.md` verbatim. Order is fixed: what moved, framing,
-evidence, residuals, boundary. The template carries the per-field rules,
-including what a `Not real if →` and a `Worth opening →` may and may not say.
+Use `assets/brief-template.md` verbatim — fixed order, and the per-field rules
+for what a `Not real if →` and a `Worth opening →` may say.
 
-Build every `[...]` marker from `references/link-targets.md` — the alert's own
-route with **that row's** session date pinned, which is what expands the row
-instead of landing the reader on a capped list. Read that file before composing
-one: the date is often absent, and its table says which weaker link to take when
-it is. Every downgrade is disclosed in the brief; an undisclosed one is the
-disclosure-drop these guardrails exist to prevent.
+Build every `[...]` marker from `references/link-targets.md`: `appHost` from
+`assets/brief-config.json` plus the athlete's Alerts-tab route with that row's
+`alertId`, which opens the exact alert. Never write a host or a host
+placeholder into a template. When an id is missing, that file's table says
+which weaker link to take — and every downgrade is disclosed in the brief.
 
 ### 7. Gate through the critic (mandatory)
 
 Hand the draft to the `brief-critic` subagent. It returns a per-rule verdict.
 
 - Fix every violation and re-submit **once**.
-- If a **blocking** rule (1, 3, 4, 9, 10, 11) still fails, do not send. Report the
-  violation and stop.
+- If a **blocking** rule (1, 3, 4, 9, 10, 11, 12) still fails, do not send.
+  Report the violation and stop.
 - Non-blocking violations that survive two passes are listed in the run log
   and the brief goes out — do not loop.
 
-### 8. Send, and log
+### 8. Fidelity check (mandatory)
 
+Render the final brief, write `run.json`, and run
+`scripts/check_fidelity.py` per `references/fidelity-check.md`. Any unmatched
+figure or bad link: remove the element (rule 12), re-render, re-run — never
+edit a payload or add a derived count to make it pass. Still failing after one
+fix, or exit 2: do not send; report the unmatched lines and stop.
+
+### 9. Send, and log
+
+Send only when the critic verdict is `send` **and** the fidelity check passes.
 Send to the configured recipients. Emit a one-line run log: window, roster
-total, trained, flagged, carded, critic verdicts, and anything the sweep could
-not classify.
+total, trained, flagged, carded, critic verdicts, fidelity result, and anything
+the sweep could not classify.
 
 ## Guardrails
 
 - **Never invent an athlete name.** Hashed pseudonyms (`Athlete 1A2B3C4D`) mean
   egress PII redaction is on for that org. Report the pseudonym as given;
   redaction is not a defect to work around.
-- **Never fill a gap by inference.** A missing baseline, a null unit, an
-  unresolvable link: state the gap. Shortening a brief must never delete a
-  disclosure while keeping the behaviour it disclosed.
-- **Never suggest, recommend or prescribe.** No load instruction, no status
-  label, no "consider", no "pending sign-off". Rule 9 is blocking and a
-  softened prescription still violates it. If a line could change what an
-  athlete does today, cut it.
+- **Never fill a gap.** A missing field leaves its element out (rule 12); a
+  null unit or an unresolvable link is stated as a gap. No review or "learning
+  loop" figures — no MCP tool returns them. Shortening a brief must never delete
+  a disclosure while keeping the behaviour it disclosed.
+- **Never suggest, recommend or prescribe** — not even softened ("consider",
+  "pending sign-off"). If a line could change what an athlete does today, cut
+  it (rule 9).
 - **Never imply a clearance**, for a carded athlete or an uncarded one.
 - **Never let length be the fix.** If the brief is too long, move provenance
   behind links. Reasoning, falsifiers and caveats are the product.
@@ -162,10 +167,8 @@ not classify.
 
 ## Output shape
 
-A sent email plus a one-line run log. The email fits its what-moved list on one
-phone screen without scrolling; names which signal moved per athlete with one
-figure for it; states the correct denominator in the first three lines; carries
-every falsifier, one sentence each; and ends with the verbatim boundary
-statement and the data cutoff. Length targets live in `references/rendering.md`
-— **~190 words for a daily, ~600 for a review**, two briefs rather than one at
-two lengths. A daily at review length is a defect, not a budget spent.
+A sent email plus a run log line. The what-moved list fits one phone screen;
+one signal and one figure per athlete; the denominator in the first three
+lines; every falsifier; the verbatim boundary and the data cutoff. Lengths per
+`references/rendering.md`: **~190 words daily, ~600 review** — two briefs, not
+one at two lengths.

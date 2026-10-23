@@ -1,0 +1,20 @@
+{
+  "tool": "get_athlete_alerts",
+  "arguments": {
+    "athleteId": "0a1b2c3d-0000-4000-8000-000000000001",
+    "startDate": "2026-10-15",
+    "endDate": "2026-10-21"
+  },
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Showing 1 of 1 alerts for athlete 0a1b2c3d-0000-4000-8000-000000000001 with sessions 2026-10-15 to 2026-10-21."
+      },
+      {
+        "type": "text",
+        "text": "[{\"alertId\": \"alert_7f3e9c21_sess0101\", \"alertType\": \"High_Deceleration_Count\", \"severity\": \"high\", \"severityBand\": \"red\", \"metric\": \"decelerations\", \"valueType\": \"percentageAboveBaseline\", \"observedValue\": 6.56, \"baselineValue\": 2.67, \"percentageAboveBaseline\": 145.69, \"percentageOfBaseline\": 245.69, \"observationWindowDays\": 7, \"unit\": \"m/s2\", \"unitVerified\": true, \"aggregationType\": \"single_session\", \"triggerSessionId\": \"catapult-0d34719d-sess0101\", \"sessionDate\": \"2026-10-20\", \"timestamp\": \"2026-10-22T02:10:00Z\", \"message\": \"Deceleration intensity above this athlete's usual level.\"}]"
+      }
+    ]
+  }
+}

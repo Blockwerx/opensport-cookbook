@@ -12,12 +12,12 @@ conversation**, or the assistant has no data to read.
 ## What you give up, and why it matters
 
 The installed version hands each draft to a separate reviewer — the
-`brief-critic` subagent — which checks it against eleven rules and **refuses**
+`brief-critic` subagent — which checks it against twelve rules and **refuses**
 the ones that fail. Neither Claude.ai nor ChatGPT has subagents, so the prompt
 below asks the same assistant that wrote the draft to check its own work.
 
 That is weaker, and not by a little. A writer reviewing their own draft
-rationalises; an independent reviewer starting from the rules does not. The six
+rationalises; an independent reviewer starting from the rules does not. The seven
 blocking rules are reproduced in full below so the check has something concrete
 to fail against, but the check is **requested rather than enforced**.
 
@@ -75,7 +75,7 @@ WHAT TO DO
    one signal that moved, the provenance of the figure, and a "Not real if"
    line naming what would make the observation wrong.
 
-THE SIX RULES THAT BLOCK A SEND
+THE SEVEN RULES THAT BLOCK A SEND
 
 R1. Every rate states its denominator. Never publish a count against the roster
 total when a smaller population is the true denominator. "50 of 82 past
@@ -121,9 +121,17 @@ R11. Carry this boundary statement verbatim, at any length:
 All four clauses. "Pending sign-off" does not substitute and must not appear.
 Alongside it, state the data cutoff.
 
+R12. Only fields the OpenSport connector returned are rendered. Every number in
+the brief must be a value a tool returned, at display precision, or one of the
+denominator counts above. If a field is missing, leave that element out — never
+fill it with an estimate, a squad figure or a typical value. Call a baseline a
+maximum, median or average only if the alert says so. No review, feedback or
+"learning loop" figures (no tool returns them) and no match narrative a field
+does not state.
+
 BEFORE YOU SHOW ME ANYTHING
 
-Re-read your own draft against R1, R3, R4, R9, R10 and R11 one at a time, and
+Re-read your own draft against R1, R3, R4, R9, R10, R11 and R12 one at a time, and
 report a pass or fail for each with the line you are judging. If any fails, fix
 it and say what you changed. If you cannot fix it, show me the draft with the
 failure named rather than quietly softening it.
@@ -135,14 +143,18 @@ Then show me the brief here. Do not email, post or send it anywhere.
 
 ## After the first run
 
-Three things to check yourself, because they are the failures that look like
+Four things to check yourself, because they are the failures that look like
 successes:
 
 - **The headline count** reads *N of the M who trained*, not *N of the roster*.
 - **The boundary statement** is there, all four clauses.
 - **The percentages carry a stamp**, and no percentage sits on a baseline the
   brief said it could not trust.
+- **Every figure is in the tool output.** Pick two numbers and find them in
+  what the connector returned. The installed version runs a script that checks
+  every one before sending; this version cannot.
 
 If you find yourself checking these every morning, that is the argument for
-installing the plugin version instead — the critic checks them for you, and
-refuses the brief rather than reporting the problem underneath it.
+installing the plugin version instead — the critic and the fidelity check do
+it for you, and refuse the brief rather than reporting the problem underneath
+it.

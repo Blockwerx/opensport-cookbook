@@ -1,0 +1,18 @@
+{
+  "tool": "get_acr",
+  "arguments": {
+    "athleteId": "0a1b2c3d-0000-4000-8000-000000000003"
+  },
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Acute:chronic ratio for the athlete."
+      },
+      {
+        "type": "text",
+        "text": "{\"ratio\": 1.38, \"band\": \"elevated\", \"acuteLoad\": 2140.0, \"chronicLoad\": 1550.7, \"dataSufficient\": true}"
+      }
+    ]
+  }
+}

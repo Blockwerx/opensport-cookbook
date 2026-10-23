@@ -1,0 +1,20 @@
+{
+  "tool": "get_athlete_alerts",
+  "arguments": {
+    "athleteId": "0a1b2c3d-0000-4000-8000-000000000004",
+    "startDate": "2026-10-15",
+    "endDate": "2026-10-21"
+  },
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Showing 1 of 1 alerts for athlete 0a1b2c3d-0000-4000-8000-000000000004 with sessions 2026-10-15 to 2026-10-21."
+      },
+      {
+        "type": "text",
+        "text": "[{\"alertId\": \"alert_ac6b2f54_sess0401\", \"alertType\": \"Load_Overload\", \"severity\": \"low\", \"severityBand\": \"yellow\", \"metric\": \"load\", \"valueType\": \"percentageAboveBaseline\", \"observedValue\": 480.0, \"baselineValue\": 450.0, \"percentageAboveBaseline\": 6.67, \"unit\": \"AU\", \"unitVerified\": true, \"sessionDate\": \"2026-09-30\", \"timestamp\": \"2026-10-22T02:10:00Z\", \"message\": \"Load above usual.\"}]"
+      }
+    ]
+  }
+}

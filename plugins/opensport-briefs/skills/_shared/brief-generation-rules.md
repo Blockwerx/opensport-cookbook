@@ -1,11 +1,11 @@
 # Brief generation rules
 
-Eleven rules governing any athlete-facing or staff-facing brief this plugin
+Twelve rules governing any athlete-facing or staff-facing brief this plugin
 generates from OpenSport MCP tool output. Each is phrased so a reviewer — human
 or the `brief-critic` subagent — can say "this draft violates rule 4" and point
 at a line.
 
-Rules 1, 3, 4, 9, 10 and 11 are **blocking**: a draft that violates one is not
+Rules 1, 3, 4, 9, 10, 11 and 12 are **blocking**: a draft that violates one is not
 sent.
 
 ---
@@ -321,6 +321,45 @@ There isn't one — see rule 9.
 
 Alongside it, state that generation was unattended and unreviewed, and give
 the data cutoff.
+
+## 12. Only MCP fields are rendered (BLOCKING)
+
+**Every figure in the brief is a field the MCP returned, at display precision —
+or a count these rules define from those fields.** Nothing is computed beyond
+that, estimated, carried over from memory or an older brief, or written to
+fill a gap.
+
+The failure this prevents is not a wrong calculation — it is a brief that reads
+as authoritative while quoting numbers no tool returned. A brief built outside
+these rules showed an average load per day that matched no field, called a
+baseline a "28-day maximum" when the field it came from was a median, and
+reported counts of how many alerts staff had reviewed — a figure no OpenSport
+MCP tool returns at all. Each looked like data. None could be traced.
+
+- **A missing field leaves the element out.** No value, no figure: drop the
+  line, the column or the clause it would have filled. Do not substitute a
+  neighbouring field, a squad average, a typical value or a phrase that implies
+  one. Where the template requires every card to carry the same fields, the
+  card states the absence in words (`Load history unavailable for this
+  athlete`) — that is a disclosure, never a number.
+- **Say what the field says it is.** A baseline is a maximum, a median or an
+  average because its rule or definition says so, not because the word reads
+  well. If the payload does not say which, do not name a statistic.
+- **Derived counts are the denominator funnel only** — roster, trained, no
+  session in window, unclassified, alerted, red, flagged, carded, screened, and
+  the rates between them that rule 1 requires. Each must be reproducible from
+  the payloads.
+- **No review, feedback or "learning loop" lines.** How many alerts were
+  reviewed, actioned or marked expected is not an MCP field. Leave those lines
+  out entirely until a tool returns them — not as zero, not as "not yet
+  available".
+- **No unsourced narrative.** No match context, post-match commentary or cause
+  that a payload field does not state. Prose is a figure's neighbour, not a
+  source.
+
+Checked mechanically by `scripts/check_fidelity.py` against the saved payloads
+(see `../pre-session-brief/references/fidelity-check.md`); a brief is not sent
+unless it passes. The critic checks the prose half.
 
 ---
 

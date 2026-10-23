@@ -81,9 +81,10 @@ Cards: 5
 
 Report observations only — no suggestions, no recommendations, no status labels.
 
-Send to the configured recipients when the brief-critic gate passes. If a
-blocking rule fails after one revision pass, do not send — reply to me with the
-failing rule and the offending lines instead.
+Send to the configured recipients only when the brief-critic gate passes and
+the fidelity check passes. If either still fails after one revision pass, do
+not send — reply to me with the failing rule or the unmatched figures and links
+instead.
 ```
 
 Two things worth knowing:

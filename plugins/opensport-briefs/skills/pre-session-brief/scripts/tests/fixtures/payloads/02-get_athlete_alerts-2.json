@@ -1,0 +1,20 @@
+{
+  "tool": "get_athlete_alerts",
+  "arguments": {
+    "athleteId": "0a1b2c3d-0000-4000-8000-000000000002",
+    "startDate": "2026-10-15",
+    "endDate": "2026-10-21"
+  },
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Showing 1 of 1 alerts for athlete 0a1b2c3d-0000-4000-8000-000000000002 with sessions 2026-10-15 to 2026-10-21."
+      },
+      {
+        "type": "text",
+        "text": "[{\"alertId\": \"alert_8a4f0d32_sess0201\", \"alertType\": \"Accumulated_Load_vs_Match_Demands\", \"severity\": \"moderate\", \"severityBand\": \"amber\", \"metric\": \"distance\", \"definition\": \"Metres covered from match day through MD+3, compared with the starters' median.\", \"valueType\": \"percentageOfBaseline\", \"observedValue\": 4120, \"baselineValue\": 3900, \"percentageOfBaseline\": 105.64, \"percentageAboveBaseline\": 5.64, \"unit\": \"m\", \"unitVerified\": true, \"aggregationType\": \"daily_total\", \"sessionDate\": \"2026-10-21\", \"timestamp\": \"2026-10-22T02:10:00Z\", \"message\": \"Accumulated distance above the starters' median.\"}]"
+      }
+    ]
+  }
+}
